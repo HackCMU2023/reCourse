@@ -1,10 +1,8 @@
-console.log("hola")
 document.getElementById("submit").addEventListener("click", onSubmit);
 
 function onSubmit(){
-    var selectedCourse = document.getElementById("courseSelect").value
-    console.log(selectedCourse)
-    data = {"course": selectedCourse}
+    selectedOptions = Array.from(document.getElementById("courseSelect").selectedOptions).map(({ value }) => value);
+    data = {"course": selectedOptions}
     var ajax_params = {
         'url'     : "courseRecs",
         'type'    : "get",
@@ -33,5 +31,5 @@ function loadCourses(){
 $(document).ready(function () {
     //change selectboxes to selectize mode to be searchable
     loadCourses()
-    $("select").select2();
+    $(".js-example-basic-multiple").select2();
 });
