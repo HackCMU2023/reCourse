@@ -4,7 +4,16 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     </head>
     <body>
-        Select Course: <select multiple id="courseSelect" name="courseSelect[]" style="width:200px;" class="js-example-basic-multiple"></select><br>
+        <button id="add">Add course!</button><hr>
+        <div id="CourseRatings">
+            <div id="rating1">
+                Select Course: <select id="courseSelect1"  style="width:200px;" class="js-example-basic-single"></select><br>
+                <label for="r1">Rating (between 1 and 5):</label>
+                <input type="number" id="r1" name="r1" min="1" max="5"><br>
+                <button id="delete1">Delete course!</button>
+                <hr>
+            </div>
+        </div>
         <button type="button" id="submit">Submit!</button>
         <p id="output"></p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
