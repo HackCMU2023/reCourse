@@ -37,12 +37,16 @@ jobs:
           envkey_GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
           directory: website
           file_name: .env
+      
+      - name: Zip folder
+        run: zip -r ../website.zip *
+        working-directory: website/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: website/
+          path: website.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -64,4 +68,4 @@ jobs:
           app-name: 'reCourse'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_180BA0B98A304FF49CB3D0E700310F24 }}
-          package: .
+          package: website.zip
