@@ -2,8 +2,13 @@ var express = require('express');
 
 var app = express();
 var path = require('path');
+var data = require('./data.json');
 
 app.use(express.static(path.join(__dirname,'static')));
+
+app.get("/courseList", function (req, res) {
+    res.send(Object.keys(data));
+})
 
 app.get("/*", function(req, res){
     res.sendFile('views/main.html' , { root : __dirname});
