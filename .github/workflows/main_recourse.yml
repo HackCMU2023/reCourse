@@ -13,10 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./website
-
     steps:
       - uses: actions/checkout@v2
 
@@ -30,12 +26,13 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+        working-directory: website/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: website/
 
   deploy:
     runs-on: ubuntu-latest
