@@ -15,13 +15,14 @@ allCourseData = semData["courses"]
 courseDescriptionEmbeddings = {}
 
 try:
-    seenLast = False
+    seenLast = True
     for courseNum, courseData in allCourseData.items():
         # Filter out some courses for now!
-        if courseNum[:2] not in ["15", "16", "08", "02", "11", "05", "10", "17", "18", "60", "54"]:
+        #if courseNum[:2] not in ["15", "16", "08", "02", "11", "05", "10", "17", "18", "60", "54"]:
+        if courseNum[:2] not in ["33", "76", "98", "03", "70", "09"]:
             continue
 
-        if courseNum == "16-822":
+        if courseNum == "XX-XXX":
             seenLast = True
 
         if not seenLast:

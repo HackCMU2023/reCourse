@@ -27,6 +27,16 @@ jobs:
           npm run build --if-present
           npm run test --if-present
         working-directory: website/
+      
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_PROTOCOL: "https"
+          envkey_DOMAIN: "recourse.azurewebsites.net"
+          envkey_GOOGLE_ID: ${{ vars.GOOGLE_ID }}
+          envkey_GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
+          directory: website
+          file_name: .env
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2

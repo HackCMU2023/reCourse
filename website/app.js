@@ -1,9 +1,29 @@
 var express = require('express');
+var session = require('express-session')
+var config = require('dotenv').config();
+
+var google = require('googleapis').google;
+
+var oauth2Client = new google.auth.OAuth2(process.env.GOOGLE_ID, process.env.GOOGLE_SECRET,
+  process.env.PROTOCOL + "://" + process.env.DOMAIN + "/oauth2/callback"
+);
+var auth_url = oauth2Client.generateAuthUrl({
+  scope: ["profile", "email"],
+  hd: "andrew.cmu.edu"
+});
 
 var app = express();
 var path = require('path');
 var data = require('./data.json');
 var similarities = require('./similarities.json');
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 app.use(express.static(path.join(__dirname,'static')));
 
@@ -42,8 +62,41 @@ app.get("/courseRecs", function (req, res) {
     res.send(outputString);
 })
 
+app.get("/oauth2/callback", function(req, res) {
+    var errorHandler = function(error) {
+        if (error) {
+            console.log("ERROR: " + JSON.stringify(error));
+            res.redirect("/error");
+        }
+    };
+    var errorHandlerDummy = function(error) {
+        // do nothing
+    };
+    var emailP = oauth2Client.getToken(req.query.code)
+    .then(function(result) {
+        return google.oauth2("v2").userinfo.get({
+            access_token: result.tokens.access_token
+        });
+    }).then(function(userinfo) {
+        return userinfo.data.email;
+    }).catch(errorHandler);
+
+    Promise.all([emailP])
+    .then(function(results) {
+        var email = results[0];
+        req.session.email = email;
+        req.session.authenticated = true;
+
+        res.redirect("/");
+    }).catch(errorHandlerDummy);
+});
+
 app.get("/*", function(req, res){
-    res.sendFile('views/main.html' , { root : __dirname});
+    if (req.session && req.session.authenticated) {
+        res.sendFile('views/main.html' , { root : __dirname});
+    } else {
+        res.redirect(auth_url);
+    }
 })
 
 // -------------- listener -------------- //

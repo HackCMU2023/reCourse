@@ -1,4 +1,7 @@
 website/node_modules
+website/.env
+
+.vscode
 
 .DS_Store
 **/.DS_Store
