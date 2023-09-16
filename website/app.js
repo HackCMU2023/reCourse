@@ -10,6 +10,10 @@ app.get("/courseList", function (req, res) {
     res.send(Object.keys(data));
 })
 
+app.get("/courseReqs", function (req, res) {
+    res.send('ToBeImplemented');
+})
+
 app.get("/*", function(req, res){
     res.sendFile('views/main.html' , { root : __dirname});
 })
