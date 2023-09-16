@@ -12,14 +12,15 @@ app.get("/courseList", function (req, res) {
 })
 
 app.get("/courseRecs", function (req, res) {
-    var selectedCourses = req.query
+    var selectedCourses = req.query.data
     //var selectedCourses = [{course : "15-317", score : 10}, {course : "15-312", score : 8}, {course : "15-213", score : -5}, {course : "15-440", score : -8}]
 
     var keyValues = []
 
     for (var key in similarities) {
-        if (selectedCourses.includes(key))
+        if (selectedCourses.map((x) => x.course).includes(key))
             continue
+
         var avg = 0
         for (var i in selectedCourses) {
             avg += similarities[selectedCourses[i].course][key] * selectedCourses[i].score
