@@ -55,7 +55,7 @@ app.get("/courseRecs", function (req, res) {
 
     outputString = "Recommended Courses:"
     for (var i = 0; i < 10; i++) {
-        outputString += "<br><br>" + keyValues[i][0] + " " + data.courses[keyValues[i][0]].name + " " + " (similarity: " + keyValues[i][1].toFixed(4) + ")"
+        outputString += "<br><br>" + keyValues[i][0] + " " + data.courses[keyValues[i][0]].name + " " + " (score: " + keyValues[i][1].toFixed(4) + ")"
         outputString += "<br>" + data.courses[keyValues[i][0]].desc
     }
 
