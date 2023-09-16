@@ -12,13 +12,19 @@ app.get("/courseList", function (req, res) {
 })
 
 app.get("/courseRecs", function (req, res) {
-    var selectedCourse = req.query.course
-    
-    var similarityDict = similarities[selectedCourse];
+    var selectedCourses = ["15-317", "15-122"]
+
     var keyValues = []
 
-    for (var key in similarityDict) {
-        keyValues.push([ key, similarityDict[key] ])
+    for (var key in similarities) {
+        if (selectedCourses.includes(key))
+            continue
+        var avg = 0
+        for (var i in selectedCourses) {
+            avg += similarities[selectedCourses[i]][key]
+        }
+        avg/=selectedCourses.length
+        keyValues.push([key, avg])
     }
 
     keyValues = keyValues.sort(function compare(kv1, kv2) {
