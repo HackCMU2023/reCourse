@@ -3,18 +3,35 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var data = require('./data.json');
+var similarities = require('./similarities.json');
 
 app.use(express.static(path.join(__dirname,'static')));
 
 app.get("/courseList", function (req, res) {
-    res.send(Object.keys(data));
+    res.send(Object.keys(similarities));
 })
 
-app.get("/courseReqs", function (req, res) {
+app.get("/courseRecs", function (req, res) {
     var selectedCourse = req.query.course
     
-    var response = "To be implemented: " + selectedCourse
-    res.send(response);
+    var similarityDict = similarities[selectedCourse];
+    var keyValues = []
+
+    for (var key in similarityDict) {
+        keyValues.push([ key, similarityDict[key] ])
+    }
+
+    keyValues = keyValues.sort(function compare(kv1, kv2) {
+        return kv2[1] - kv1[1] 
+    })
+
+    outputString = "Answers:"
+    for (var i = 0; i < 10; i++) {
+        outputString += "<br><br>" + keyValues[i][0] + " " + data.courses[keyValues[i][0]].name + " " + " (similarity: " + keyValues[i][1].toFixed(4) + ")"
+        outputString += "<br>" + data.courses[keyValues[i][0]].desc
+    }
+
+    res.send(outputString);
 })
 
 app.get("/*", function(req, res){

@@ -6,7 +6,7 @@ function onSubmit(){
     console.log(selectedCourse)
     data = {"course": selectedCourse}
     var ajax_params = {
-        'url'     : "courseReqs",
+        'url'     : "courseRecs",
         'type'    : "get",
         'data' : data,
         'success' : function(response){
