@@ -6,12 +6,11 @@ function addCourseDiv(){
     count++;
 
     var innerDiv = document.createElement('div');
-    innerDiv.className = 'rating' + count
+    innerDiv.className = 'rating'
     innerDiv.innerHTML = "Select Course: <select id='courseSelect"+count+"' class='js-example-basic-single' style='width:200px;'></select><br>"
-    +"<label for='r'"+count+"'>Rating (between 1 and 5):</label>"
+    +"<br><label for='r'"+count+"'>Rating (between 1 and 5): </label>"
     +"<input type='number' id='r"+count+"' name='r"+count+"'min='1' max='5'><br>"
     // +"<button id='delete"+count+"'>Delete course!</button>"
-    +"<hr>"
     document.getElementById("CourseRatings").appendChild(innerDiv);
     // document.getElementById("CourseRatings").innerHTML += 
     // "<div class=`rating"+count+"`>Select Course: <select id='courseSelect"+count+"'  style='width:200px;'></select><br>"
