@@ -22,7 +22,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: process.env.PROTOCOL === "https" }
 }))
 
 app.use(express.static(path.join(__dirname,'static')));
@@ -60,6 +60,10 @@ app.get("/courseRecs", function (req, res) {
     }
 
     res.send(outputString);
+})
+
+app.get("/error", function (req, res) {
+    res.send("There was an error when logging in")
 })
 
 app.get("/oauth2/callback", function(req, res) {
