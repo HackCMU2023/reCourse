@@ -11,7 +11,10 @@ app.get("/courseList", function (req, res) {
 })
 
 app.get("/courseReqs", function (req, res) {
-    res.send('ToBeImplemented');
+    var selectedCourse = req.query.course
+    
+    var response = "To be implemented: " + selectedCourse
+    res.send(response);
 })
 
 app.get("/*", function(req, res){

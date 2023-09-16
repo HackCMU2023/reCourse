@@ -2,8 +2,18 @@ console.log("hola")
 document.getElementById("submit").addEventListener("click", onSubmit);
 
 function onSubmit(){
-    console.log(document.getElementById("courseSelect").value)
-    document.getElementById("output").innerHTML = "selected: " + document.getElementById("courseSelect").value
+    var selectedCourse = document.getElementById("courseSelect").value
+    console.log(selectedCourse)
+    data = {"course": selectedCourse}
+    var ajax_params = {
+        'url'     : "courseReqs",
+        'type'    : "get",
+        'data' : data,
+        'success' : function(response){
+            document.getElementById("output").innerHTML = response
+        }
+    }
+    $.ajax( ajax_params )
 }
 
 function loadCourses(){
