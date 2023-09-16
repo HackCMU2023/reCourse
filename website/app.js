@@ -12,7 +12,7 @@ app.get("/courseList", function (req, res) {
 })
 
 app.get("/courseRecs", function (req, res) {
-    var selectedCourses = ["15-317", "15-122"]
+    var selectedCourses = req.query.course
 
     var keyValues = []
 
