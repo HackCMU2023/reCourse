@@ -3,14 +3,10 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-app.set('views', __dirname + '/views');
-app.use(express.static(path.join(__dirname,'static')));
-
-app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname,'static')));
 
 app.get("/*", function(req, res){
-    res.send("Hello World");
+    res.sendFile('views/main.html' , { root : __dirname});
 })
 
 // -------------- listener -------------- //
